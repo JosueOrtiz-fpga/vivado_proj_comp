@@ -6,7 +6,7 @@ vivado=/c/AMD/Vivado/2024.1/bin/vivado
 xsct=/c/AMD/Vitis/2024.1/bin/xsct
 
 .DEFAULT_GOAL=help
-
+.PHONY: $(TOPS)
 help:
 	@echo "The following targets exists"
 	@echo $(TOPS)
