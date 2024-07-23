@@ -1,9 +1,16 @@
 # Add package: Vitis Python CLI
 import vitis
 
-# Get the config file
+# Add packages for managing directories/files
 import sys
-sys.path.append(sys.argv[1])
+import os
+
+# Set the top-level/sw and top-level/sw/src paths
+sw_path = sys.argv[1]
+sw_src_path = str(sw_path) + "/src"
+
+# Import the config.py file in the top-level/sw directory
+sys.path.append(sw_path)
 import config
 
 # Create a Vitis client object
@@ -15,10 +22,11 @@ client.set_workspace(path="./")
 # Create the platform
 platform = client.create_platform_component(name = config.platform_name,hw_design = sys.argv[2] ,os = config.os_name,cpu = config.cpu_name,domain_name = config.domain_name, no_boot_bsp = False)
 # Add the bsp libs
-platform = client.get_component(config.platform_name)
-domain = platform.get_domain(config.domain_name)
-for lib_name in config.bsp_libs:
-    status = domain.set_lib(lib_name=lib_name)
+if config.bsp_libs != None:
+    platform = client.get_component(config.platform_name)
+    domain = platform.get_domain(config.domain_name)
+    for lib_name in config.bsp_libs:
+        status = domain.set_lib(lib_name=lib_name)
 # Build the platform
 status = platform.build()
 
@@ -32,6 +40,8 @@ if config.template_name != None:
         raise Exception("Invalid template name provided")
 
 comp = client.create_app_component(name=config.app_name,platform =platform_xpfm,domain = config.domain_name,template = config.template_name)
+if os.path.exists(sw_src_path): 
+    comp.import_files(from_loc = sw_src_path, files=None, dest_dir_in_cmp="src")
 # Build the app component
 comp = client.get_component(name=config.app_name)
 comp.build()
