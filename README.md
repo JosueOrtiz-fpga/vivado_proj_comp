@@ -6,14 +6,14 @@ Paths to the Vivado and Vitis executable must be provided in the make/scripts/en
 The build scripts expect a particular directory structure for finding design files in the top/ folder as explained below:
 ```
 top
- |--top-level a             # "top-level a" direcotry
-        |--hw               # vivado design folder
-        |   |--hdl          # hdl folder
-        |   |   ||--bd      # block design folder (.tcl)
-        |   |--xdc          # constraints folder (.xdc)
-        |_sw                # vitis design folder
-            |_configpy      # project config script
-            |_src           # source folder
+ |-top-level a             # "top-level a" direcotry
+        |-hw               # vivado design folder
+        |   |-hdl          # hdl folder
+        |   |   |-bd      # block design folder (.tcl)
+        |   |-xdc          # constraints folder (.xdc)
+        |-sw                # vitis design folder
+            |-configpy      # project config script
+            |-src           # source folder
  |-top-level b              # multiple top-levels using the
                             # same structure are supported
 ```
